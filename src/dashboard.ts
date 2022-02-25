@@ -1,4 +1,7 @@
-const getWidget = (metricName: String) => {
+import { providers } from './providers'
+import { ProviderMetadata } from './types/provider'
+
+const getWidget = (metricName: string) => {
   return {
     type: 'metric',
     x: 0,
@@ -6,21 +9,7 @@ const getWidget = (metricName: String) => {
     width: 6,
     height: 6,
     properties: {
-      metrics: [
-        [
-          'NodeProviders',
-          'BENCHMARK_TIME',
-          'providerName',
-          'Alchemy',
-          'providerType',
-          'Growth',
-          'testName',
-          metricName,
-          { id: 'm1' },
-        ],
-        ['...', 'Infura', '.', 'Standard', '.', '.', { id: 'm2' }],
-        ['...', 'QuickNode', '.', 'Pro', '.', '.', { id: 'm3' }],
-      ],
+      metrics: getMetrics(metricName),
       view: 'timeSeries',
       stacked: false,
       region: 'us-west-2',
@@ -33,12 +22,28 @@ const getWidget = (metricName: String) => {
   }
 }
 
+const getMetrics = (metricName: string) =>
+  providers.map((pm: ProviderMetadata, i: number) => {
+    return [
+      'NodeProviders',
+      'BENCHMARK_TIME',
+      'providerName',
+      pm.name,
+      'providerType',
+      pm.type,
+      'testName',
+      metricName,
+      { id: 'm' + (i + 1) },
+    ]
+  })
+
 const widgets = [
   'getBlock',
+  'getOldBlock',
   'getBlockNumber',
   'getBalance',
   'getBalanceERC20(eth_call)',
-  'getLogs_erc20',
+  'getLogs_erc20(100-blocks)',
 ].map(getWidget)
 
 console.log(

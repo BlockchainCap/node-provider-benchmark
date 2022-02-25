@@ -20,4 +20,9 @@ export const providers: ProviderMetadata[] = [
     type: 'Pro',
     provider: new StaticJsonRpcProvider(process.env.QUICKNODE_URL),
   },
+  {
+    name: 'Pocket',
+    type: 'default',
+    provider: new StaticJsonRpcProvider(process.env.POCKET_URL),
+  },
 ]
