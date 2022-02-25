@@ -1,5 +1,5 @@
 {
-  "name": "@provider-benchmarks",
+  "name": "@provider-benchmarks/main",
   "version": "1.0.0",
   "scripts": {
     "lint": "eslint . --ext .ts",
