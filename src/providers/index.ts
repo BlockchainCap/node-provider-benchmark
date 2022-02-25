@@ -1,8 +1,7 @@
 import { ProviderMetadata } from '@benchmarks/types/provider'
 import {
   AlchemyProvider,
-  InfuraProvider,
-  JsonRpcProvider,
+  StaticJsonRpcProvider,
 } from '@ethersproject/providers'
 
 export const providers: ProviderMetadata[] = [
@@ -14,11 +13,11 @@ export const providers: ProviderMetadata[] = [
   {
     name: 'Infura',
     type: 'Standard',
-    provider: new InfuraProvider('mainnet', process.env.INFURA_API),
+    provider: new StaticJsonRpcProvider(process.env.INFURA_API),
   },
   {
     name: 'QuickNode',
     type: 'Pro',
-    provider: new JsonRpcProvider(process.env.QUICKNODE_URL),
+    provider: new StaticJsonRpcProvider(process.env.QUICKNODE_URL),
   },
 ]

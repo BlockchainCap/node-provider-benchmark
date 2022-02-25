@@ -1,3 +1,6 @@
+import { reportMetric } from '../../reporters/cloudwatchReport'
+import { reportMetric as reportMetricFile } from '../../reporters/fileReporter'
+import { Metric } from '@benchmarks/types/metric'
 import { ProviderMetadata } from '@benchmarks/types/provider'
 
 export const runTestAndReport = async (
@@ -8,7 +11,13 @@ export const runTestAndReport = async (
 ) => {
   for (var i = 0; i < iterations; i++) {
     const time = await timeTask(task)
-    logDataPoint(providerMetadata.name, providerMetadata.type, testName, time)
+    logDataPoint(
+      providerMetadata.name,
+      providerMetadata.type,
+      testName,
+      time,
+      i,
+    )
   }
 }
 
@@ -17,13 +26,19 @@ const logDataPoint = (
   providerType: string,
   testName: string,
   time: number,
+  iteration: number,
 ) => {
-  console.log({
+  const metric: Metric = {
     providerName: providerName,
     providerType: providerType,
     testName: testName,
     time: time,
-  })
+    timestamp: Date.now(),
+    iteration: iteration,
+  }
+
+  reportMetric(metric)
+  reportMetricFile(metric)
 }
 
 export const timeTask = async (task: () => Promise<any>) => {
@@ -31,7 +46,7 @@ export const timeTask = async (task: () => Promise<any>) => {
   try {
     await task()
   } catch (e) {
-    console.error('Something failed.')
+    console.error('Something failed.', e.message)
   }
   const end = Date.now()
   return end - start

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "lint": "eslint . --ext .ts",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "generate-dashboard" : "ts-node src/dashboard.ts"
   },
   "nodemonConfig": {
     "watch": [
@@ -48,6 +49,7 @@
   ],
   "dependencies": {
     "@openzeppelin/contracts": "^4.5.0",
+    "aws-sdk": "^2.1081.0",
     "dotenv": "^16.0.0",
     "ethers": "^5.5.4"
   },
