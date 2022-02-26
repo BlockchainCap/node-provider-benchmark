@@ -6,8 +6,8 @@ const getWidget = (metricName: string) => {
     type: 'metric',
     x: 0,
     y: 0,
-    width: 6,
-    height: 6,
+    width: 24,
+    height: 7,
     properties: {
       metrics: getMetrics(metricName),
       view: 'timeSeries',
@@ -18,6 +18,11 @@ const getWidget = (metricName: string) => {
       stat: 'p99',
       period: 1,
       title: metricName,
+      yAxis: {
+        left: {
+          max: metricName.toLowerCase().includes('log') ? 4500 : 1500,
+        },
+      },
     },
   }
 }

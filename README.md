@@ -21,6 +21,17 @@ runTestAndReport(
 ```
 To get the results to show up in the AWS dashboard for the new test, you need to add the test name to the widgets array in [`src/dashboard.ts`](src/dashboard.ts)
 
+## Set up your providers
+Create a .env file with all your API access keys. This should match all the providers you are benmchmarking in  [`src/providers/index.ts`](src/providers/index.ts)
+``` 
+ALCHEMY_API_KEY=<<<YOUR ALCHEMY API KEY>>>
+INFURA_URL=<<<INFURA URL>>>
+QUICKNODE_URL=<<<Quicknode url>>>
+POCKET_URL=<<<YOUR POCKET PROJECT URL>>>
+MORALIS_URL=<<<YOUR MORALIS URL>>>
+MORALIS_ARCH_URL=<<<YOUR MORALIS ARCHIVE URL>>>
+```
+
 ## Dashboards
 The framework by default reports all metrics to file in [out/report.txt](out/report.txt) and also attempts to write the metrics to AWS cloudwatch (they give nice graphing tools to us for free). 
 To view all of the metrics in 1 place on AWS, there is the CloudWatch Dashboard feature. There is a script in this package to generate the configuration file for the dashboard. Just make sure [`src/dashboard.ts`](src/dashboard.ts) is up to date with your tests then run 
