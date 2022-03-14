@@ -5,7 +5,9 @@ import { abi as ERC20 } from '@openzeppelin/contracts/build/contracts/ERC20.json
 import { Contract } from 'ethers'
 import { Filter } from '@ethersproject/providers'
 
-const DEFAULT_ITERATIONS = 1000
+const DEFAULT_ITERATIONS = -1
+const DEFAULT_DELAY_BETWEEN_CALLS = 10
+
 export const runBenchmarks = async () => {
   await Promise.all(
     providers.map(async (providerMetadata: ProviderMetadata) => {
@@ -22,21 +24,28 @@ export const runBenchmarks = async () => {
           providerMetadata,
           DEFAULT_ITERATIONS,
           'getBlockNumber',
+          DEFAULT_DELAY_BETWEEN_CALLS,
           () => providerMetadata.provider.getBlockNumber(),
         ),
-        runTestAndReport(providerMetadata, DEFAULT_ITERATIONS, 'getBlock', () =>
-          providerMetadata.provider.getBlock(14_000_000),
+        runTestAndReport(
+          providerMetadata,
+          DEFAULT_ITERATIONS,
+          'getBlock',
+          DEFAULT_DELAY_BETWEEN_CALLS,
+          () => providerMetadata.provider.getBlock(14_000_000),
         ),
         runTestAndReport(
           providerMetadata,
           DEFAULT_ITERATIONS,
           'getOldBlock',
+          DEFAULT_DELAY_BETWEEN_CALLS,
           () => providerMetadata.provider.getBlock(5_000_000),
         ),
         runTestAndReport(
           providerMetadata,
           DEFAULT_ITERATIONS,
           'getBalance',
+          DEFAULT_DELAY_BETWEEN_CALLS,
           () =>
             providerMetadata.provider.getBalance(
               '0x5337122c6b5ce24D970Ce771510D22Aeaf038C44',
@@ -46,12 +55,14 @@ export const runBenchmarks = async () => {
           providerMetadata,
           DEFAULT_ITERATIONS,
           'getBalanceERC20(eth_call)',
+          DEFAULT_DELAY_BETWEEN_CALLS,
           () => erc20.balanceOf('0x5337122c6b5ce24D970Ce771510D22Aeaf038C44'),
         ),
         runTestAndReport(
           providerMetadata,
           100, // this is way slower obv
           'getLogs_erc20(100-blocks)',
+          DEFAULT_DELAY_BETWEEN_CALLS,
           () => providerMetadata.provider.getLogs(filter),
         ),
       ])
