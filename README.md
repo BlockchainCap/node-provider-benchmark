@@ -1,4 +1,4 @@
-# Quick script to run benchmarking on various RPC calls on all the providers
+# Simple script to run benchmarking on various RPC calls against any provider
 
 To run the test suite: 
 ``` 
