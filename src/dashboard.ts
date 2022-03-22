@@ -1,7 +1,7 @@
 import { providers } from './providers'
 import { ProviderMetadata } from './types/provider'
 
-const getWidget = (metricName: string) => {
+const getFaultsWidget = (metricName: string) => {
   return {
     type: 'metric',
     x: 0,
@@ -9,7 +9,27 @@ const getWidget = (metricName: string) => {
     width: 24,
     height: 7,
     properties: {
-      metrics: getMetrics(metricName),
+      metrics: getMetrics(metricName, 'FAULT'),
+      view: 'timeSeries',
+      stacked: false,
+      region: 'us-west-2',
+      start: '-PT1H',
+      end: 'P0D',
+      stat: 'Sum',
+      period: 1,
+      title: metricName + " Faults",
+    },
+  }
+}
+const getTimeWidget = (metricName: string) => {
+  return {
+    type: 'metric',
+    x: 0,
+    y: 0,
+    width: 24,
+    height: 7,
+    properties: {
+      metrics: getMetrics(metricName, 'BENCHMARK_TIME'),
       view: 'timeSeries',
       stacked: false,
       region: 'us-west-2',
@@ -17,21 +37,21 @@ const getWidget = (metricName: string) => {
       end: 'P0D',
       stat: 'p99',
       period: 1,
-      title: metricName,
+      title: metricName + " Timed",
       yAxis: {
         left: {
-          max: metricName.toLowerCase().includes('log') ? 4500 : 1500,
+          max: metricName.toLowerCase().includes('log') ? 10_000 : 1500,
         },
       },
     },
   }
 }
 
-const getMetrics = (metricName: string) =>
+const getMetrics = (metricName: string, metricType: string) =>
   providers.map((pm: ProviderMetadata, i: number) => {
     return [
       'NodeProviders',
-      'BENCHMARK_TIME',
+      metricType,
       'providerName',
       pm.name,
       'providerType',
@@ -42,6 +62,7 @@ const getMetrics = (metricName: string) =>
     ]
   })
 
+
 const widgets = [
   'getBlock',
   'getOldBlock',
@@ -49,10 +70,14 @@ const widgets = [
   'getBalance',
   'getBalanceERC20(eth_call)',
   'getLogs_erc20(100-blocks)',
-].map(getWidget)
+  'getLogs_erc20(2k-blocks)',
+  'getLogs_erc20(10k-blocks)',
+]
+const timeWidgets = widgets.map(getTimeWidget)
+const faultWidgets = widgets.map(getFaultsWidget)
 
 console.log(
   JSON.stringify({
-    widgets: widgets,
+    widgets: [...timeWidgets, ...faultWidgets],
   }),
 )

@@ -34,6 +34,39 @@ export const reportMetric = async (metric: Metric) => {
       Namespace: 'NodeProviders',
     }
     metricsCache = []
+    await putMetric(requestParams)
+  }
+}
+
+export const reportFault = async (metric: Metric) => {
+  const metricParams = [
+    { Name: 'providerName', Value: metric.providerName },
+    { Name: 'providerType', Value: metric.providerType },
+    { Name: 'testName', Value: metric.testName },
+  ]
+
+  metricsCache.push({
+    MetricName: 'FAULT',
+    Dimensions: metricParams,
+    Value: 1,
+    Timestamp: new Date(metric.timestamp),
+    StorageResolution: 1,
+  })
+
+  if (metricsCache.length >= metricsPerRequest) {
+    const requestParams: PutMetricDataInput = {
+      MetricData: metricsCache,
+      Namespace: 'NodeProviders',
+    }
+    metricsCache = []
+    await putMetric(requestParams)
+  }
+}
+
+const putMetric = async (requestParams: PutMetricDataInput) => {
+  try {
     await cloudwatch.putMetricData(requestParams).promise()
+  } catch (err) {
+    console.error('Failed to put metric data to AWS', err)
   }
 }
