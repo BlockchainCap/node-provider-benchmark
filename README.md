@@ -19,7 +19,7 @@ runTestAndReport(
     () => <<<insert a promise here to benchmark>>>,
 ),
 ```
-To get the results to show up in the AWS dashboard for the new test, you need to add the test name to the widgets array in [`src/dashboard.ts`](src/dashboard.ts)
+To get the results to show up in the AWS dashboard for the new test, you need to add the test name to the widgets array in [`src/dashboard.ts`](src/dashboard.ts#L66)
 
 ## Set up your providers
 Create a .env file with all your API access keys. This should match all the providers you are benmchmarking in  [`src/providers/index.ts`](src/providers/index.ts)
