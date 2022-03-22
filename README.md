@@ -14,9 +14,11 @@ For example:
 ``` typescript
 runTestAndReport(
     providerMetadata,
-    DEFAULT_ITERATIONS,
+    UNLIMITTED_ITERATIONS,
     '<<<insert your custom test name>>>',
-    () => <<<insert a promise here to benchmark>>>,
+    SHOULD_BLOCK_BETWEEN_CALLS,
+    DEFAULT_DELAY_BETWEEN_CALLS,
+    () => <<<Insert any promise here>>>
 ),
 ```
 To get the results to show up in the AWS dashboard for the new test, you need to add the test name to the widgets array in [`src/dashboard.ts`](src/dashboard.ts#L66)
