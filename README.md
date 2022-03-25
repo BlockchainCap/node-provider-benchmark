@@ -1,5 +1,7 @@
-# Simple script to run benchmarking on various RPC calls against any provider
+# Node Provider Benchmarker
+This is a simple script to run benchmarking on various RPC calls against any provider
 
+----
 To run the test suite: 
 ``` 
 npm install
