@@ -11,6 +11,16 @@ export const providers: ProviderMetadata[] = [
     provider: new AlchemyProvider('mainnet', process.env.ALCHEMY_API_KEY),
   },
   {
+    name: 'Chainstack',
+    type: 'Developer',
+    provider: new StaticJsonRpcProvider(process.env.CHAINSTACK_URL),
+  },
+  {
+    name: 'Chainstack',
+    type: 'Business',
+    provider: new StaticJsonRpcProvider(process.env.CHAINSTACK_ARCH_URL),
+  },
+  {
     name: 'Infura',
     type: 'Standard',
     provider: new StaticJsonRpcProvider(process.env.INFURA_URL),

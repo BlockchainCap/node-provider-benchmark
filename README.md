@@ -27,6 +27,8 @@ To get the results to show up in the AWS dashboard for the new test, you need to
 Create a .env file with all your API access keys. This should match all the providers you are benmchmarking in  [`src/providers/index.ts`](src/providers/index.ts)
 ``` bash
 ALCHEMY_API_KEY=<<<YOUR ALCHEMY API KEY>>>
+CHAINSTACK_URL=<<<YOUR CHAINSTACK URL>>>
+CHAINSTACK_ARCH_URL=<<<YOUR CHAINSTACK ARCHIVE URL>>>
 INFURA_URL=<<<INFURA URL>>>
 QUICKNODE_URL=<<<Quicknode url>>>
 POCKET_URL=<<<YOUR POCKET PROJECT URL>>>
